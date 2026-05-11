@@ -1,6 +1,7 @@
 'use client';
 import { Button, Card, CardFooter, Chip, ListBox, ListBoxItem, Select } from '@heroui/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 
@@ -23,50 +24,8 @@ const ExplorePage = () => {
             </header>
 
             {/* Filters Bar */}
-            <div className="flex items-center mb-8 border border-gray-200 divide-x divide-gray-200">
-                {/* CATEGORY */}
-                <Select className="flex-1" placeholder="CATEGORY">
-                    <Select.Trigger className="px-4 py-3 rounded-none flex justify-between items-center w-full hover:bg-gray-50 transition-colors">
-                        <Select.Value className="text-sm uppercase text-gray-500" />
-                        <Select.Indicator className="text-gray-400">⌄</Select.Indicator>
-                    </Select.Trigger>
-                    <Select.Popover className="bg-white shadow-xl border border-gray-100 rounded-sm w-3/14">
-                        <ListBox className="p-2">
-                            <ListBoxItem id="beach" textValue="Beach" className="p-2 hover:bg-cyan-50 rounded-md">Beach</ListBoxItem>
-                            <ListBoxItem id="mountain" textValue="Mountain" className="p-2 hover:bg-cyan-50 rounded-md">Mountain</ListBoxItem>
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
-
-                {/* PRICE RANGE */}
-                <Select className="flex-1" placeholder="PRICE RANGE">
-                    <Select.Trigger className="px-4 py-3 rounded-none flex justify-between items-center w-full hover:bg-gray-50 transition-colors">
-                        <Select.Value className="text-sm uppercase text-gray-500" />
-                        <Select.Indicator className="text-gray-400">⌄</Select.Indicator>
-                    </Select.Trigger>
-                    <Select.Popover className="bg-white shadow-xl border border-gray-100 rounded-sm w-3/14">
-                        <ListBox className="p-2">
-                            <ListBoxItem id="low" textValue="$0 - $1000" className="p-2 hover:bg-cyan-50 rounded-md">$0 - $1000</ListBoxItem>
-                            <ListBoxItem id="high" textValue="$1000+" className="p-2 hover:bg-cyan-50 rounded-md">$1000+</ListBoxItem>
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
-
-                {/* SORT BY */}
-                <Select className="flex-1" placeholder="SORT BY">
-                    <Select.Trigger className="px-4 py-3 rounded-none flex justify-between items-center w-full hover:bg-gray-50 transition-colors">
-                        <Select.Value className="text-sm uppercase text-gray-500" />
-                        <Select.Indicator className="text-gray-400">⌄</Select.Indicator>
-                    </Select.Trigger>
-                    <Select.Popover className="bg-white shadow-xl border border-gray-100 rounded-sm w-3/14">
-                        <ListBox className="p-2">
-                            <ListBoxItem id="newest" textValue="Newest First" className="p-2 hover:bg-cyan-50 rounded-md">Newest First</ListBoxItem>
-                            <ListBoxItem id="price" textValue="Price" className="p-2 hover:bg-cyan-50 rounded-md">Price: Low to High</ListBoxItem>
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
-            </div>
-
+            
+            
             <p className="text-gray-400 mb-6 italic">Showing {destinations.length} destinations</p>
 
             {/* Grid Layout */}
@@ -88,7 +47,7 @@ const ExplorePage = () => {
 
                             <Image
                                 alt={item.destinationName}
-                                width={200} height={200}
+                                width={200} height={200} loading="eager"
                                 className="object-cover w-full h-60 rounded-xl group-hover:scale-105 transition-transform duration-500"
                                 src={item.imageUrl || "https://via.placeholder.com/400"}
                             />
@@ -107,12 +66,14 @@ const ExplorePage = () => {
                                 <span>📅</span> {item.duration}
                             </div>
 
-                            <Button
-                                variant="light"
-                                className="p-0 mt-4 text-cyan-500 font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:bg-transparent"
-                            >
-                                Book Now ↗
-                            </Button>
+                            <Link href={`/destinations/${item._id}`}>
+                                <Button
+                                    variant="light"
+                                    className="p-0 mt-4 text-cyan-500 font-bold uppercase tracking-wider text-xs flex items-center gap-2 hover:text-blue-500 transition-colors"
+                                >
+                                    Book Now ↗
+                                </Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 ))}

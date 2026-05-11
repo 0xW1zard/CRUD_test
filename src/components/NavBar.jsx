@@ -26,8 +26,8 @@ const NavBar = () => {
                         </Link>
                     </NavbarItem>
                     <NavbarItem>
-                        <Link color="foreground" href={'/admin'} className="hover:text-cyan-500 transition-colors">
-                            Admin
+                        <Link color="foreground" href={'/add-destination'} className="hover:text-cyan-500 transition-colors">
+                            Add Destination
                         </Link>
                     </NavbarItem>
                 </NavbarContent>

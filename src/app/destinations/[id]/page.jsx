@@ -2,22 +2,26 @@ import React from 'react';
 import { Button, Card, Input, Chip } from '@heroui/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { BiPencil } from 'react-icons/bi';
+import { ModalForm } from '@/components/ModalForm';
+import { TbTrash } from 'react-icons/tb';
+import Delete from '@/components/Delete';
 
 const DestinationDetailsPage = async ({ params }) => {
     const { id } = await params;
-    
+
     // Fetching data from your Express backend
     const res = await fetch(`http://localhost:5000/destinations/${id}`, { cache: 'no-store' });
     const data = await res.json();
 
-    const { 
-        destinationName, 
-        country, 
-        price, 
-        duration, 
-        imageUrl, 
-        description, 
-        departureDate 
+    const {
+        destinationName,
+        country,
+        price,
+        duration,
+        imageUrl,
+        description,
+        departureDate
     } = data;
 
     return (
@@ -28,12 +32,13 @@ const DestinationDetailsPage = async ({ params }) => {
                     <span className="mr-2">←</span> Back to Destinations
                 </Link>
                 <div className="flex gap-2">
-                    <Button variant="bordered" size="sm" className="rounded-none border-gray-300">
-                        ✎ Edit
-                    </Button>
-                    <Button variant="bordered" color="danger" size="sm" className="rounded-none border-red-200">
-                        🗑 Cancel
-                    </Button>
+                    <div>
+                        <ModalForm data={data}></ModalForm>
+                    </div>
+                    <div>
+                        <Delete data={data}></Delete>
+                    </div>
+
                 </div>
             </div>
 
@@ -49,7 +54,7 @@ const DestinationDetailsPage = async ({ params }) => {
 
             {/* Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pt-4">
-                
+
                 {/* Left Column: Info */}
                 <div className="lg:col-span-2 space-y-8">
                     <div className="space-y-2">
@@ -99,13 +104,13 @@ const DestinationDetailsPage = async ({ params }) => {
                             </div>
 
                             <div className="space-y-4">
-                                <Input 
-                                    type="text" 
-                                    variant="bordered" 
-                                    defaultValue={departureDate} 
+                                <Input
+                                    type="text"
+                                    variant="bordered"
+                                    defaultValue={departureDate}
                                     className="rounded-none"
                                 />
-                                <Button 
+                                <Button
                                     className="w-full bg-cyan-500 text-white rounded-none font-bold text-lg h-12"
                                     endContent={<span>→</span>}
                                 >

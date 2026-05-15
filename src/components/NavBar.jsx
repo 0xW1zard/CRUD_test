@@ -17,7 +17,7 @@ const NavBar = () => {
                 {/* Left Side: Navigation Links */}
                 <NavbarContent className="hidden sm:flex gap-8" justify="start">
                     <NavbarItem isActive>
-                        <Link href="#" aria-current="page" className="text-cyan-500 font-semibold border-b-2 border-cyan-500 pb-1">
+                        <Link href="/" aria-current="page" className="text-cyan-500 font-semibold border-b-2 border-cyan-500 pb-1">
                             Home
                         </Link>
                     </NavbarItem>

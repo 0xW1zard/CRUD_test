@@ -3,6 +3,7 @@ import { authClient } from '@/lib/auth-client';
 import { Button, Card, Input } from '@heroui/react';
 import { DateField, Label } from "@heroui/react";
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const BookingCard = ({ destination }) => {
     const {
@@ -19,7 +20,7 @@ const BookingCard = ({ destination }) => {
     const { user } = session || {};
     const [selectedDate, setSelectedDate] = useState(null);
 
-    const handleBooking = () => {
+    const handleBooking = async () => {
         const bookingData = {
             userId: user?.id,
             userName: user?.name,
@@ -32,11 +33,22 @@ const BookingCard = ({ destination }) => {
             price,
             duration,
             description,
-            departureDate: selectedDate,
+            departureDate: new Date(selectedDate),
         }
-        console.log('Booking Data:', bookingData);
-     }
 
+        const res = await fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingData),
+        });
+        const result = await res.json();
+        console.log('Booking Result:', result);
+        toast.success('Booking successful!');
+    };
+
+     
     return (
         <div className='w-full'>
             <Card className="p-8 border border-gray-100 shadow-sm rounded-none sticky top-24">

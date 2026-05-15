@@ -14,7 +14,6 @@ export function ModalForm({ data }) {
         duration,
         imageUrl,
         description,
-        departureDate
     } = data;
 
     const handleSubmit = async (e) => {
@@ -137,15 +136,6 @@ export function ModalForm({ data }) {
                                             />
                                             <FieldError />
                                         </TextField>
-
-                                        {/* Departure Date */}
-                                        <div className="md:col-span-2">
-                                            <TextField defaultValue={departureDate} name="departureDate" type="date" isRequired>
-                                                <Label>Departure Date</Label>
-                                                <Input type="date" className="rounded-2xl" />
-                                                <FieldError />
-                                            </TextField>
-                                        </div>
 
                                         {/* Image URL - Removed preview */}
                                         <div className="md:col-span-2">

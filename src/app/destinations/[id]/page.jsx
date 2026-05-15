@@ -6,22 +6,21 @@ import { BiPencil } from 'react-icons/bi';
 import { ModalForm } from '@/components/ModalForm';
 import { TbTrash } from 'react-icons/tb';
 import Delete from '@/components/Delete';
+import BookingCard from '@/components/BookingCard';
 
 const DestinationDetailsPage = async ({ params }) => {
     const { id } = await params;
 
     // Fetching data from your Express backend
-    const res = await fetch(`http://localhost:5000/destinations/${id}`, { cache: 'no-store' });
+    const res = await fetch(`http://localhost:5000/destinations/${id}`);
     const data = await res.json();
 
     const {
         destinationName,
         country,
-        price,
         duration,
         imageUrl,
         description,
-        departureDate
     } = data;
 
     return (
@@ -95,36 +94,7 @@ const DestinationDetailsPage = async ({ params }) => {
 
                 {/* Right Column: Booking Card */}
                 <div className="lg:col-span-1">
-                    <Card className="p-8 border border-gray-100 shadow-sm rounded-none sticky top-24">
-                        <div className="space-y-6">
-                            <div>
-                                <p className="text-gray-400 text-sm">Starting from</p>
-                                <h2 className="text-4xl font-bold text-cyan-500">${price}</h2>
-                                <p className="text-gray-400 text-xs">per person</p>
-                            </div>
-
-                            <div className="space-y-4">
-                                <Input
-                                    type="text"
-                                    variant="bordered"
-                                    defaultValue={departureDate}
-                                    className="rounded-none"
-                                />
-                                <Button
-                                    className="w-full bg-cyan-500 text-white rounded-none font-bold text-lg h-12"
-                                    endContent={<span>→</span>}
-                                >
-                                    Book Now
-                                </Button>
-                            </div>
-
-                            <div className="space-y-3 pt-4 border-t border-gray-100 text-sm text-gray-500">
-                                <p className="flex items-center gap-2">✓ Free cancellation up to 7 days</p>
-                                <p className="flex items-center gap-2">✓ Travel insurance included</p>
-                                <p className="flex items-center gap-2">✓ 24/7 customer support</p>
-                            </div>
-                        </div>
-                    </Card>
+                    <BookingCard destination={data}></BookingCard>
                 </div>
             </div>
         </div>

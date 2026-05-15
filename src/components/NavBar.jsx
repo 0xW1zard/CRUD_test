@@ -1,10 +1,16 @@
 'use client';
+import { authClient } from '@/lib/auth-client';
 import { Button } from '@heroui/button';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 const NavBar = () => {
+
+    const { data: session } = authClient.useSession();
+    const { user } = session || {};
+
     return (
         <div className='container mx-auto my-2.5 '>
             <Navbar isBordered className="bg-white/90 backdrop-blur-md">
@@ -39,20 +45,33 @@ const NavBar = () => {
 
                 {/* Right Side: Profile & Auth */}
                 <NavbarContent justify="end" className="gap-6">
-                    <NavbarItem className="flex items-center gap-2 cursor-pointer hover:text-cyan-500">
-                        <span className="text-lg">👤</span> {/* Replace with an icon library like Lucide if preferred */}
-                        <p className="hidden md:block">Profile</p>
-                    </NavbarItem>
-                    <NavbarItem>
-                        <Link color="foreground" href={'/login'} className="font-medium">
-                            Login
-                        </Link>
-                    </NavbarItem>
-                    <NavbarItem>
-                        <Button as={Link} color="foreground" href={'/signup'} variant="light" className="font-medium">
-                            Sign Up
-                        </Button>
-                    </NavbarItem>
+                    {
+                        session ? (<NavbarItem className="flex items-center gap-2 cursor-pointer hover:text-cyan-500">
+                            <Image className="text-lg rounded-full h-10 w-10" src={user?.image || '👤'} alt="Profile" width={32} height={32} />
+                            <p className="hidden md:block ml-1 ">{user?.name?.split(' ')[0] || 'User'}</p>
+                        </NavbarItem>) : null
+                    }
+                    {
+                        session ?
+                            <NavbarItem>
+                                <Button onClick={() => authClient.signOut()} color="error" variant="light" className="font-medium bg-red-500 hover:bg-red-600 text-white ">
+                                    Logout
+                                </Button>
+                            </NavbarItem>
+                            :
+                            <>
+                                <NavbarItem>
+                                    <Link color="foreground" href={'/login'} className="font-medium">
+                                        Login
+                                    </Link>
+                                </NavbarItem>
+                                <NavbarItem>
+                                    <Button as={Link} color="foreground" href={'/signup'} variant="light" className="font-medium">
+                                        Sign Up
+                                    </Button>
+                                </NavbarItem>
+                                </>
+                    }
                 </NavbarContent>
             </Navbar>
         </div>
